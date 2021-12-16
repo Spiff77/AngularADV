@@ -7,6 +7,7 @@ import {concatMap, exhaustMap, map, mergeMap, shareReplay, subscribeOn, switchMa
 import {HttpClient} from '@angular/common/http';
 import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import {Store} from '@ngrx/store';
+import {getCounterValue} from './store/counter/counter.selectors';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit{
   nameItem: any;
   food = true;
   req!: Observable<any>
-  $value!: Observable<{ counter: number}>;
+  $value!: Observable<number>;
 
   constructor(private translateService: TranslateService,
               private http: HttpClient,
@@ -31,7 +32,10 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.translateService.use( localStorage.getItem('lang') || 'en')
-    this.$value = this.store.select('counter')
+
+    this.$value = this.store.select(getCounterValue)
+
+
     const subject$ = new ReplaySubject(2);
     subject$.next(1)
     subject$.next(2)

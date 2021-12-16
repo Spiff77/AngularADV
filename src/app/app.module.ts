@@ -17,6 +17,8 @@ import { ChildrenComponent } from './children/children.component';
 import { CounterComponent } from './counter/counter.component';
 import {StoreModule} from '@ngrx/store';
 import {counterReducer} from './store/counter/counter.reducer';
+import { CounterFormComponent } from './counter-form/counter-form.component';
+import {FormsModule} from '@angular/forms';
 
 const routes:Routes = [
   {path: '', component: HomeComponent},
@@ -39,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient){
     ParentComponent,
     ChildrenComponent,
     CounterComponent,
+    CounterFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,13 +56,14 @@ export function HttpLoaderFactory(http: HttpClient){
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-  /*  ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),*/
+    }),
+    FormsModule,
+    /*  ServiceWorkerModule.register('ngsw-worker.js', {
+        enabled: environment.production,
+        // Register the ServiceWorker as soon as the app is stable
+        // or after 30 seconds (whichever comes first).
+        registrationStrategy: 'registerWhenStable:30000'
+      }),*/
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
