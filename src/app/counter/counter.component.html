@@ -1,0 +1,10 @@
+<h3>counter</h3>
+
+
+<div *ngIf="($value | async) as val">
+  ----------->{{val.counter}}
+
+  <button (click)="increment()">+</button>
+  <button (click)="reset()">0</button>
+  <button (click)="decrement()">-</button>
+</div>

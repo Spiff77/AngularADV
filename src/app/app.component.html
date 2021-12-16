@@ -1,4 +1,6 @@
 <div>
+  <div *ngIf="($value | async) as val">{{val.counter}}</div>
+
   <ul>
     <li><a (click)="changeLang('en')">EN</a></li>
     <li><a (click)="changeLang('fr')">FR</a></li>
@@ -11,4 +13,5 @@
     <li [routerLink]="['/b/b1']">B1</li>
   </ul>
   <router-outlet></router-outlet>
+  <app-counter></app-counter>
 </div>

@@ -12,6 +12,11 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TestInterceptor} from './test.interceptor';
 import {BreweryInterceptor} from './brewery.interceptor';
 import { BreweryComponent } from './brewery/brewery.component';
+import { ParentComponent } from './parent/parent.component';
+import { ChildrenComponent } from './children/children.component';
+import { CounterComponent } from './counter/counter.component';
+import {StoreModule} from '@ngrx/store';
+import {counterReducer} from './store/counter/counter.reducer';
 
 const routes:Routes = [
   {path: '', component: HomeComponent},
@@ -31,11 +36,17 @@ export function HttpLoaderFactory(http: HttpClient){
     UserComponent,
     HomeComponent,
     BreweryComponent,
+    ParentComponent,
+    ChildrenComponent,
+    CounterComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    StoreModule.forRoot({
+      counter: counterReducer
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
