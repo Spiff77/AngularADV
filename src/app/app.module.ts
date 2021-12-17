@@ -27,6 +27,10 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import { DynaFormComponent } from './dyna-form/dyna-form.component';
 import { TableComponent } from './table/table.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import {usersReducer} from './store/user/users.reducer';
+import {UsersEffect} from './store/user/users.effect';
 
 const routes:Routes = [
   {path: '', component: HomeComponent},
@@ -73,7 +77,8 @@ const firebaseConfig = {
     AngularFirestoreModule,
     AngularFireAuthModule,
     StoreModule.forRoot({
-      counter: counterReducer
+      counter: counterReducer,
+      users: usersReducer
     }),
 
     TranslateModule.forRoot({
@@ -85,6 +90,8 @@ const firebaseConfig = {
     }),
     FormsModule,
     ReactiveFormsModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([UsersEffect]),
     /*ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable

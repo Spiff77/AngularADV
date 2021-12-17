@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {decrement, increment, reset} from '../store/counter/counter.actions';
 import {CounterState} from '../store/counter/counter.state';
+import {AppState} from '../store/AppState';
 
 @Component({
   selector: 'app-counter',
@@ -14,7 +15,7 @@ export class CounterComponent implements OnInit, OnDestroy {
   $value!: Observable<any>;
   $out = new EventEmitter<string>()
 
-  constructor(private store: Store<CounterState>) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.$value = this.store.select('counter')

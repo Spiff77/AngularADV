@@ -2,6 +2,7 @@
   <ul *ngIf="!myForm.valid && formSubmitted">
       <li *ngIf="myForm.controls['firstname'].errors?.required">First Name is required</li>
       <li *ngIf="myForm.controls['firstname'].errors?.nameTooShort">First Name is too short</li>
+      <li *ngIf="myForm.controls['firstname'].errors?.duplicateName">First Name is already taken</li>
       <li *ngIf="myForm.controls['lastname'].errors?.required">Last Name is required</li>
       <li *ngIf="myForm.controls['address']?.get('street')?.errors?.required">Street is required</li>
   </ul>

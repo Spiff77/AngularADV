@@ -19,6 +19,9 @@ import {Store} from '@ngrx/store';
 import {getCounterValue} from './store/counter/counter.selectors';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {CounterComponent} from './counter/counter.component';
+import {getUsers} from './store/user/users.selectors';
+import {AppState} from './store/AppState';
+import {loadAllUsersStart} from './store/user/users.actions';
 
 @Component({
   selector: 'app-root',
@@ -33,10 +36,11 @@ export class AppComponent implements OnInit, AfterViewInit{
   $value!: Observable<number>;
   @ViewChild('moncontainer', {read: ViewContainerRef})
   container!: ViewContainerRef;
+  users$!: Observable<any>
 
   constructor(private translateService: TranslateService,
               private http: HttpClient,
-              private store: Store<{counter: {counter: number}}>,
+              private store: Store<AppState>,
               private db: AngularFirestore,
               private cfr: ComponentFactoryResolver
               ) {}
@@ -48,18 +52,11 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+
+    this.users$ = this.store.select(getUsers);
+    this.store.dispatch(loadAllUsersStart())
+
     this.translateService.use( localStorage.getItem('lang') || 'en')
-
-    this.$value = this.store.select(getCounterValue)
-   // setInterval(() => this.db.collection('test').add({rand: Math.random()}), 2000)
-    this.db.collection('test').valueChanges().subscribe(console.log)
-
-    const subject$ = new ReplaySubject(2);
-    subject$.next(1)
-    subject$.next(2)
-    subject$.next(3)
-
-    subject$.subscribe(v => console.log(v))
 
   }
 

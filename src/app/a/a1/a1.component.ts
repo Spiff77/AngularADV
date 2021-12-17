@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store/AppState';
+import {Observable} from 'rxjs';
+import {getUsers} from '../../store/user/users.selectors';
 
 @Component({
   selector: 'app-a1',
@@ -7,8 +11,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class A1Component implements OnInit {
 
-  constructor() { }
+  users$!: Observable<any>
 
-  ngOnInit(): void {}
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit(): void {
+    this.users$ = this.store.select(getUsers);
+    console.log(this.users$)
+  }
 
 }
