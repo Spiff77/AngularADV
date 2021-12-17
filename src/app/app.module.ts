@@ -18,7 +18,15 @@ import { CounterComponent } from './counter/counter.component';
 import {StoreModule} from '@ngrx/store';
 import {counterReducer} from './store/counter/counter.reducer';
 import { CounterFormComponent } from './counter-form/counter-form.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularFireModule} from '@angular/fire/compat';
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { SalutComponent } from './salut/salut.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import { DynaFormComponent } from './dyna-form/dyna-form.component';
+import { TableComponent } from './table/table.component';
 
 const routes:Routes = [
   {path: '', component: HomeComponent},
@@ -32,6 +40,17 @@ export function HttpLoaderFactory(http: HttpClient){
     return new TranslateHttpLoader(http)
 }
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCqAEbHre23y1DZ1LEUNpTuQft5i8o93BU",
+  authDomain: "hello-6cac5.firebaseapp.com",
+  projectId: "hello-6cac5",
+  storageBucket: "hello-6cac5.appspot.com",
+  messagingSenderId: "992629834869",
+  appId: "1:992629834869:web:7d55ba2e88d43dddc1e43c",
+  measurementId: "G-NF0ZVZNQED"
+};
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,14 +61,21 @@ export function HttpLoaderFactory(http: HttpClient){
     ChildrenComponent,
     CounterComponent,
     CounterFormComponent,
+    SalutComponent,
+    DynaFormComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     StoreModule.forRoot({
       counter: counterReducer
     }),
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -58,12 +84,13 @@ export function HttpLoaderFactory(http: HttpClient){
       }
     }),
     FormsModule,
-    /*  ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        // Register the ServiceWorker as soon as the app is stable
-        // or after 30 seconds (whichever comes first).
-        registrationStrategy: 'registerWhenStable:30000'
-      }),*/
+    ReactiveFormsModule,
+    /*ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),*/
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

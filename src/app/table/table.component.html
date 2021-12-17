@@ -1,0 +1,13 @@
+<form [formGroup]="getForm()">
+<table>
+  <tr *ngFor="let g of myFormArray.controls; let i=index" [formGroupName]="i">
+   <div *ngFor="let c of getFormObject(myFormArray.controls[i]); let i=index">
+     <label [for]="'name'+1">name</label>
+     <input type="text" [id]="'name'+1" [formControl]="c">
+   </div>
+    <td>
+      <a (click)="removeSnItem(i)">Remove</a>
+    </td>
+  </tr>
+</table>
+</form>

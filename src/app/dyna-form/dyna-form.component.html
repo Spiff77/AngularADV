@@ -1,0 +1,37 @@
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <ul *ngIf="!myForm.valid && formSubmitted">
+      <li *ngIf="myForm.controls['firstname'].errors?.required">First Name is required</li>
+      <li *ngIf="myForm.controls['firstname'].errors?.nameTooShort">First Name is too short</li>
+      <li *ngIf="myForm.controls['lastname'].errors?.required">Last Name is required</li>
+      <li *ngIf="myForm.controls['address']?.get('street')?.errors?.required">Street is required</li>
+  </ul>
+  <input type="hidden" formControlName="id">
+  <div>
+    <label for="personName">Name</label>
+    <input type="text" id="personName" formControlName="name">
+  </div>
+  <div>
+    <label for="firstname">Name</label>
+    <input type="text" id="firstname" formControlName="firstname">
+  </div>
+  <fieldset formGroupName="address">
+    <legend>Address</legend>
+    <input type="hidden" formControlName="id">
+    <div>
+      <label for="number">No</label>
+      <input type="text" id="number" formControlName="number">
+    </div>
+  </fieldset>
+  <app-table [myFormArray]="getSocialNetworksArray()" [formGroup]="myForm"></app-table>
+  <fieldset formArrayName="socialnetworks">
+    <legend>Social networks</legend>
+
+    <button (click)="addSnItem()">ADD</button>
+  </fieldset>
+  <button type="submit">OK</button>`
+</form>
+
+
+<pre>
+  {{myForm.value| json}}
+</pre>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, EventEmitter, OnInit, HostListener} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {decrement, increment, reset} from '../store/counter/counter.actions';
@@ -9,9 +9,10 @@ import {CounterState} from '../store/counter/counter.state';
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.css']
 })
-export class CounterComponent implements OnInit {
+export class CounterComponent implements OnInit, OnDestroy {
 
   $value!: Observable<any>;
+  $out = new EventEmitter<string>()
 
   constructor(private store: Store<CounterState>) { }
 
@@ -29,5 +30,14 @@ export class CounterComponent implements OnInit {
 
   reset() {
     this.store.dispatch(reset())
+  }
+
+  @HostListener('click')
+  callParent(){
+    this.$out.emit('Hello')
+  }
+
+  ngOnDestroy(): void {
+    console.log('Bye bye')
   }
 }

@@ -109,5 +109,12 @@
       }
     }
   },
-  "defaultProject": "p1"
+  "defaultProject": "p1",
+  "schematics": {
+    "@schematics/angular:component": {
+      "skipTests": true,
+      "displayBlock": true,
+      "inlineStyle": true
+    }
+  }
 }
